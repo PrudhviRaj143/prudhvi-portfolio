@@ -12,9 +12,9 @@ import Contact from './components/sections/Contact'
 
 function Footer({ name }) {
   return (
-    <footer className="border-t border-slate-200 dark:border-white/5 py-8 text-center">
-      <p className="text-slate-400 dark:text-gray-600 text-sm font-mono">
-        Built by {name} · {new Date().getFullYear()}
+    <footer className="border-t border-black/5 dark:border-white/5 py-8 text-center bg-[#f5f7ff] dark:bg-[#050816]">
+      <p className="text-slate-400 dark:text-slate-600 text-sm font-mono">
+        {name} · {new Date().getFullYear()}
       </p>
     </footer>
   )
@@ -26,13 +26,13 @@ export default function App() {
 
   return (
     <div className={isDark ? 'dark' : ''}>
-      <div className="bg-slate-50 dark:bg-[#0a0a1a] min-h-screen text-slate-700 dark:text-gray-300 transition-colors duration-300">
+      <div className="bg-[#f5f7ff] dark:bg-[#050816] min-h-screen text-slate-700 dark:text-slate-300 transition-colors duration-300">
         <Navbar name={data.name} isDark={isDark} onToggleTheme={toggle} />
         <Suspense fallback={null}>
           <Hero data={data} isDark={isDark} />
         </Suspense>
         <About data={data} />
-        <Skills data={data} />
+        <Skills data={data} isDark={isDark} />
         <Experience data={data} />
         <Projects data={data} />
         <Education data={data} />
