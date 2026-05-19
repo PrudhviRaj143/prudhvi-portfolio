@@ -1,6 +1,6 @@
 export const portfolioData = {
   name: 'Prudhvi Raj Medikonduri',
-  title: 'Security Engineer / Senior Software Engineer',
+  title: 'Senior Software Engineer · Security Engineer · AI Engineer · SDET · Backend Engineer',
   location: 'San Jose, CA',
   email: 'prudhvi.medikonduri@gmail.com',
   linkedin: 'https://linkedin.com/in/prudhvi-raj-medikonduri',

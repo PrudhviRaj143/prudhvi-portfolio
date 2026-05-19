@@ -1,8 +1,45 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Canvas } from '@react-three/fiber'
 import { gsap } from 'gsap'
 import ParticleField from '../3d/ParticleField'
 import FloatingCube from '../3d/FloatingCube'
+
+const ROLES = [
+  'Senior Software Engineer',
+  'Security Engineer',
+  'AI Engineer',
+  'Backend Engineer',
+  'SDET',
+]
+
+function TypingRole() {
+  const [roleIdx, setRoleIdx] = useState(0)
+  const [displayed, setDisplayed] = useState('')
+  const [deleting, setDeleting] = useState(false)
+  const timeoutRef = useRef(null)
+
+  useEffect(() => {
+    const current = ROLES[roleIdx]
+    if (!deleting && displayed.length < current.length) {
+      timeoutRef.current = setTimeout(() => setDisplayed(current.slice(0, displayed.length + 1)), 60)
+    } else if (!deleting && displayed.length === current.length) {
+      timeoutRef.current = setTimeout(() => setDeleting(true), 1800)
+    } else if (deleting && displayed.length > 0) {
+      timeoutRef.current = setTimeout(() => setDisplayed(displayed.slice(0, -1)), 35)
+    } else if (deleting && displayed.length === 0) {
+      setDeleting(false)
+      setRoleIdx(i => (i + 1) % ROLES.length)
+    }
+    return () => clearTimeout(timeoutRef.current)
+  }, [displayed, deleting, roleIdx])
+
+  return (
+    <span className="text-t1 font-light">
+      {displayed}
+      <span className="inline-block w-0.5 h-6 bg-[#00d4ff] ml-0.5 align-middle animate-pulse" />
+    </span>
+  )
+}
 
 export default function Hero({ data, isDark }) {
   const headingRef = useRef(null)
@@ -63,7 +100,9 @@ export default function Hero({ data, isDark }) {
         </h1>
 
         <div ref={subRef} style={{ opacity: 0 }} className="mb-7">
-          <p className="text-xl md:text-2xl text-t2 font-light mb-2 tracking-tight">{data.title}</p>
+          <p className="text-xl md:text-2xl mb-2 tracking-tight min-h-[2rem]">
+            <TypingRole />
+          </p>
           <p className="text-[#00d4ff] font-mono text-sm">{data.location}</p>
         </div>
 
