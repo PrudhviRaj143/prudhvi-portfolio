@@ -8,10 +8,15 @@ export function useTheme() {
   })
 
   useEffect(() => {
+    const root = document.documentElement
+    if (isDark) {
+      root.classList.add('dark')
+    } else {
+      root.classList.remove('dark')
+    }
     localStorage.setItem('theme', isDark ? 'dark' : 'light')
   }, [isDark])
 
   const toggle = () => setIsDark(d => !d)
-
   return { isDark, toggle }
 }
