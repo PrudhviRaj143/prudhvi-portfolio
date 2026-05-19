@@ -4,9 +4,9 @@ import SectionWrapper from '../ui/SectionWrapper'
 import SectionHeading from '../ui/SectionHeading'
 
 const CAT_STYLE = {
-  'AI / ML':    { pill: 'bg-accent/10 text-accent border-accent/25',      icon: '#00d4ff', iconBg: 'bg-accent/10 border-accent/20' },
-  'ML':         { pill: 'bg-accent/10 text-accent border-accent/25',      icon: '#00d4ff', iconBg: 'bg-accent/10 border-accent/20' },
-  'Blockchain': { pill: 'bg-violet/10 text-violet-lt border-violet/25',   icon: '#9d5bf0', iconBg: 'bg-violet/10 border-violet/20' },
+  'AI / ML':    { pill: 'bg-[#00d4ff]/10 text-[#00d4ff] border-[#00d4ff]/25',     icon: '#00d4ff', iconBg: 'bg-[#00d4ff]/10 border-[#00d4ff]/20' },
+  'ML':         { pill: 'bg-[#00d4ff]/10 text-[#00d4ff] border-[#00d4ff]/25',     icon: '#00d4ff', iconBg: 'bg-[#00d4ff]/10 border-[#00d4ff]/20' },
+  'Blockchain': { pill: 'bg-[#7c3aed]/10 text-[#9d5bf0] border-[#7c3aed]/25',    icon: '#9d5bf0', iconBg: 'bg-[#7c3aed]/10 border-[#7c3aed]/20' },
   'AR / Mobile':{ pill: 'bg-emerald-500/10 text-emerald-500 border-emerald-500/25', icon: '#10b981', iconBg: 'bg-emerald-500/10 border-emerald-500/20' },
   'IoT':        { pill: 'bg-amber-500/10 text-amber-500 border-amber-500/25',       icon: '#f59e0b', iconBg: 'bg-amber-500/10 border-amber-500/20' },
 }
@@ -30,15 +30,9 @@ function ProjectCard({ project }) {
   }, [])
 
   return (
-    <div
-      ref={cardRef}
-      className="bg-white dark:bg-[#0c1229]
-        border border-slate-200 dark:border-white/[0.07]
-        rounded-2xl p-6 flex flex-col
-        hover:border-slate-300 dark:hover:border-white/[0.12]
-        hover:shadow-lg dark:hover:shadow-none
-        transition-all duration-300 cursor-default"
-      style={{ transformStyle: 'preserve-3d' }}
+    <div ref={cardRef}
+      style={{ borderColor: 'var(--border)', transformStyle: 'preserve-3d' }}
+      className="bg-card border rounded-2xl p-6 flex flex-col hover:shadow-lg transition-all duration-300 cursor-default"
     >
       <div className="flex items-start justify-between gap-3 mb-5">
         <div className={`w-10 h-10 rounded-xl border flex items-center justify-center flex-shrink-0 ${s.iconBg}`}>
@@ -48,31 +42,18 @@ function ProjectCard({ project }) {
         </div>
         <div className="flex items-center gap-2 flex-wrap justify-end">
           {project.highlight && (
-            <span className={`px-2.5 py-0.5 text-[10px] font-mono rounded-full border ${s.pill}`}>
-              {project.highlight}
-            </span>
+            <span className={`px-2.5 py-0.5 text-[10px] font-mono rounded-full border ${s.pill}`}>{project.highlight}</span>
           )}
-          <span className="text-[10px] font-mono text-slate-400 dark:text-slate-600">{project.period}</span>
+          <span className="text-[10px] font-mono text-t3">{project.period}</span>
         </div>
       </div>
 
-      <h3 className="text-[15px] font-semibold text-slate-900 dark:text-slate-100 mb-2 leading-snug">
-        {project.name}
-      </h3>
+      <h3 className="text-[15px] font-semibold text-t1 mb-2 leading-snug">{project.name}</h3>
+      <p className="text-t3 text-xs leading-relaxed flex-1 mb-5">{project.description}</p>
 
-      <p className="text-slate-500 dark:text-slate-500 text-xs leading-relaxed flex-1 mb-5">
-        {project.description}
-      </p>
-
-      <div className="flex flex-wrap gap-1.5 pt-4 border-t border-slate-100 dark:border-white/[0.05]">
+      <div style={{ borderColor: 'var(--border)' }} className="flex flex-wrap gap-1.5 pt-4 border-t">
         {project.tech?.map(t => (
-          <span
-            key={t}
-            className="px-2 py-0.5 text-[10px] font-mono
-              text-slate-400 dark:text-slate-600
-              rounded border border-slate-200 dark:border-white/[0.07]
-              bg-slate-50 dark:bg-transparent"
-          >
+          <span key={t} style={{ borderColor: 'var(--border)' }} className="px-2 py-0.5 text-[10px] font-mono text-t3 rounded border">
             {t}
           </span>
         ))}
@@ -83,36 +64,31 @@ function ProjectCard({ project }) {
 
 export default function Projects({ data }) {
   const [filter, setFilter] = useState('All')
-
   const usedCats = ['All', ...new Set(data.projects?.map(p => p.category === 'ML' ? 'AI / ML' : p.category))]
   const visible  = filter === 'All'
     ? data.projects
     : data.projects?.filter(p => p.category === filter || (filter === 'AI / ML' && p.category === 'ML'))
 
   return (
-    <SectionWrapper id="projects" className="bg-[#f5f7ff] dark:bg-[#050816]">
+    <SectionWrapper id="projects" className="bg-page">
       <SectionHeading label="What I've Built" title="Projects" />
 
       <div className="flex flex-wrap justify-center gap-2 mb-12">
         {usedCats.map(cat => (
-          <button
-            key={cat}
-            onClick={() => setFilter(cat)}
+          <button key={cat} onClick={() => setFilter(cat)}
+            style={filter !== cat ? { borderColor: 'var(--border)' } : {}}
             className={`px-4 py-1.5 text-xs font-mono rounded-full border transition-all duration-200 ${
               filter === cat
-                ? 'bg-accent/10 text-accent border-accent/30'
-                : 'text-slate-400 dark:text-slate-500 border-slate-200 dark:border-white/[0.07] hover:border-accent/30 hover:text-accent'
-            }`}
-          >
+                ? 'bg-[#00d4ff]/10 text-[#00d4ff] border-[#00d4ff]/30'
+                : 'text-t3 hover:text-[#00d4ff] hover:border-[#00d4ff]/30'
+            }`}>
             {cat}
           </button>
         ))}
       </div>
 
       <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-        {visible?.map(project => (
-          <ProjectCard key={project.name} project={project} />
-        ))}
+        {visible?.map(project => <ProjectCard key={project.name} project={project} />)}
       </div>
     </SectionWrapper>
   )

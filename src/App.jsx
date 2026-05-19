@@ -12,8 +12,8 @@ import Contact from './components/sections/Contact'
 
 function Footer({ name }) {
   return (
-    <footer className="border-t border-black/5 dark:border-white/5 py-8 text-center bg-[#f5f7ff] dark:bg-[#050816]">
-      <p className="text-slate-400 dark:text-slate-600 text-sm font-mono">
+    <footer className="border-t border-theme py-8 text-center bg-page">
+      <p className="text-t3 text-sm font-mono">
         {name} · {new Date().getFullYear()}
       </p>
     </footer>
@@ -25,7 +25,7 @@ export default function App() {
   const { isDark, toggle } = useTheme()
 
   return (
-    <div className="bg-[#f5f7ff] dark:bg-[#050816] min-h-screen text-slate-700 dark:text-slate-300 transition-colors duration-300">
+    <div className="bg-page min-h-screen text-t2">
       <Navbar name={data.name} isDark={isDark} onToggleTheme={toggle} />
       <Suspense fallback={null}>
         <Hero data={data} isDark={isDark} />

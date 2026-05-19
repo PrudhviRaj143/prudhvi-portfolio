@@ -4,56 +4,71 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ── Theme tokens ─────────────────────────────────────────── */
+:root {
+  --bg-page:    #f5f7ff;
+  --bg-alt:     #eef1ff;
+  --bg-card:    #ffffff;
+  --bg-nav:     rgba(245, 247, 255, 0.92);
+  --t1:         #0d1117;
+  --t2:         #374151;
+  --t3:         #6b7280;
+  --border:     rgba(0, 0, 0, 0.07);
+  --border-h:   rgba(0, 0, 0, 0.13);
+}
+
+html.dark {
+  --bg-page:    #050816;
+  --bg-alt:     #080c1e;
+  --bg-card:    #0c1229;
+  --bg-nav:     rgba(5, 8, 22, 0.92);
+  --t1:         #e2e8f0;
+  --t2:         #8896ae;
+  --t3:         #475569;
+  --border:     rgba(255, 255, 255, 0.07);
+  --border-h:   rgba(255, 255, 255, 0.13);
+}
+
 @layer base {
-  * {
-    box-sizing: border-box;
-    scroll-behavior: smooth;
-  }
+  * { box-sizing: border-box; scroll-behavior: smooth; }
 
   body {
     margin: 0;
+    background-color: var(--bg-page);
+    color: var(--t2);
     font-family: 'Inter', system-ui, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    transition: background-color 0.3s, color 0.3s;
   }
 
   #root { width: 100%; min-height: 100vh; }
 
-  /* Light mode scrollbar */
   ::-webkit-scrollbar { width: 4px; }
-  ::-webkit-scrollbar-track { background: #f5f7ff; }
-  ::-webkit-scrollbar-thumb { background: #c4b5fd; border-radius: 999px; }
+  ::-webkit-scrollbar-track { background: var(--bg-page); }
+  ::-webkit-scrollbar-thumb { background: #7c3aed; border-radius: 999px; }
   ::-webkit-scrollbar-thumb:hover { background: #9d5bf0; }
-
-  /* Dark mode scrollbar */
-  .dark ::-webkit-scrollbar-track { background: #050816; }
-  .dark ::-webkit-scrollbar-thumb { background: #7c3aed; }
-  .dark ::-webkit-scrollbar-thumb:hover { background: #9d5bf0; }
 }
 
+/* ── Theme utility classes (not Tailwind dark: variants) ─── */
 @layer utilities {
   .font-mono { font-family: 'JetBrains Mono', 'Fira Code', monospace; }
+
+  .bg-page    { background-color: var(--bg-page); }
+  .bg-alt     { background-color: var(--bg-alt); }
+  .bg-card    { background-color: var(--bg-card); }
+
+  .text-t1    { color: var(--t1); }
+  .text-t2    { color: var(--t2); }
+  .text-t3    { color: var(--t3); }
+
+  .border-theme   { border-color: var(--border); }
+  .border-theme-h { border-color: var(--border-h); }
 
   .text-gradient {
     background: linear-gradient(135deg, #00d4ff, #7c3aed);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-  }
-
-  /* Glow effects for dark mode */
-  .glow-cyan  { box-shadow: 0 0 30px rgba(0,212,255,0.15), 0 0 60px rgba(0,212,255,0.05); }
-  .glow-violet { box-shadow: 0 0 30px rgba(124,58,237,0.15), 0 0 60px rgba(124,58,237,0.05); }
-
-  /* Glass card */
-  .card-dark {
-    background: rgba(12,18,41,0.7);
-    border: 1px solid rgba(255,255,255,0.06);
-    backdrop-filter: blur(12px);
-  }
-  .card-light {
-    background: rgba(255,255,255,0.9);
-    border: 1px solid rgba(79,70,229,0.1);
-    box-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 4px 16px rgba(79,70,229,0.04);
   }
 }
